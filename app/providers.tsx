@@ -7,7 +7,6 @@ type ProvidersProps = { children: React.ReactNode }
 
 export const Providers = ({ children }: ProvidersProps) => {
   const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID ?? ''
-  console.debug({ projectId })
   const { chains, publicClient } = configureChains(
     [optimism, baseGoerli, zora],
     [w3mProvider({ projectId })]

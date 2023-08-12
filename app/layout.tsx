@@ -10,9 +10,7 @@ const Layout = ({ children }: LayoutProps) => {
     <html lang='en'>
       <body>
         <Providers>
-          <div className='flex min-h-screen items-center justify-center bg-white'>
-            {children}
-          </div>
+          <div className='flex min-h-screen bg-[#F3F3F3]'>{children}</div>
         </Providers>
       </body>
     </html>

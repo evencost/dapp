@@ -322,7 +322,11 @@ const Cycle = ({ type, selected, onClick }: CycleProps) => (
       {supportedCyclesMap[type]}
     </div>
     {selected && (
-      <img className='absolute -right-2 -top-2 ' src='images/check.svg' />
+      <img
+        className='absolute -right-2 -top-2 '
+        src='images/check.svg'
+        alt='images/check.svg?'
+      />
     )}
   </div>
 )

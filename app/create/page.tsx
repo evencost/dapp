@@ -2,14 +2,16 @@
 
 import { Create } from '@/components/Create'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 import { useAccount } from 'wagmi'
 
 const CreatePagex = () => {
   const router = useRouter()
   const { isDisconnected } = useAccount()
 
-  if (isDisconnected) router.push('/')
-
+  useEffect(() => {
+    isDisconnected && router.push('/')
+  }, [isDisconnected, router])
   return <Create />
 }
 

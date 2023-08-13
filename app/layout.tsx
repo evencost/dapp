@@ -4,7 +4,8 @@ import './globals.css'
 
 import { Providers } from '@/app/providers'
 import localFont from 'next/font/local'
-import { Toaster } from '@/components/ui/toaster'
+import { Web3Button } from '@web3modal/react'
+import { Header } from '@/components/Header'
 
 const tasaOrbiter = localFont({
   src: '../fonts/TASAOrbiterVF.woff2',
@@ -18,7 +19,8 @@ const Layout = ({ children }: LayoutProps) => {
     <html lang='en'>
       <body className={`${tasaOrbiter.variable}`}>
         <Providers>
-          <div className='flex min-h-screen items-center justify-center bg-[#F3F3F3]'>
+          <Header />
+          <div className='relative flex min-h-screen items-center justify-center bg-[#F3F3F3]'>
             {children}
           </div>
         </Providers>

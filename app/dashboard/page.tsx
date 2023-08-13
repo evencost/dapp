@@ -21,7 +21,7 @@ const getData = async (): Promise<Plan[]> => {
       user: '0x123',
       status: true,
       network: 'Optimism',
-      crypto: 'Ethereum',
+      crypto: 'Bitcoin',
       amount: 100,
       total: 100,
       cycle: '1h',
@@ -61,7 +61,11 @@ const Dashboard = async () => {
   const data = await getData()
 
   return (
-    <div className='container mx-auto py-10'>
+    <div className='container mx-auto bg-white py-10'>
+      <div className='flex justify-between'>
+        <p className='p-8 text-3xl'> {'Your Plans '}</p>
+        <p className='p-8 text-3xl'>{'🧪 PREVIEW'}</p>
+      </div>
       <DataTable columns={columns} data={data} />
     </div>
   )

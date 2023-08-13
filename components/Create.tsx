@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { supportedChains } from '@/app/providers'
 import {
   AlertDialog,
@@ -15,7 +15,8 @@ import { useToast } from './ui/use-toast'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { Toaster } from './ui/toaster'
-import { Web3Button, Web3NetworkSwitch } from '@web3modal/react'
+import { Web3NetworkSwitch } from '@web3modal/react'
+import { useNetwork } from 'wagmi'
 
 export const Create = () => {
   const [network, setNetwork] = useState<NetworkType | null>(null)
@@ -24,14 +25,15 @@ export const Create = () => {
   const [cycle, setCycle] = useState<CycleType | null>(null)
 
   return (
-    <div id='create' className='mx-2 my-2 flex w-full justify-center gap-4'>
-      <Web3Button />
-
+    <div
+      id='create'
+      className='mx-2 my-2 flex w-full flex-col justify-center gap-4 lg:flex-row'
+    >
       <Toaster />
 
       <div
         id='form'
-        className='flex max-w-[772px] flex-col gap-4 rounded-3xl bg-white px-4'
+        className='flex flex-col gap-4 rounded-3xl bg-white px-4 lg:max-w-[772px]'
       >
         <p id='title' className='mt-6 whitespace-pre text-2xl'>
           {'  Create your plan'}
@@ -333,8 +335,8 @@ type ConfirmProps = {
 }
 const Confirm = ({ network, crypto, amount, cycle }: ConfirmProps) => {
   const router = useRouter()
+  const { chain } = useNetwork()
   const [total, setTotal] = useState<number>(0)
-  console.debug({ total })
   const { toast } = useToast()
   if (
     !network ||
@@ -358,7 +360,7 @@ const Confirm = ({ network, crypto, amount, cycle }: ConfirmProps) => {
   const handleConfirm = () => {
     // step 0: create plan
     // step 0.1: send tx
-    // step 1: redirect to dashboa
+    // step 1: redirect to dashboard
     router.push('/dashboard')
   }
 
@@ -373,12 +375,17 @@ const Confirm = ({ network, crypto, amount, cycle }: ConfirmProps) => {
           <AmountSelector onChange={setTotal} />
         </AlertDialogHeader>
         <AlertDialogFooter>
-          {/* <p>Wrong network please selectt Optimism</p>
-          <Web3NetworkSwitch /> */}
+          {chain?.name !== network ? (
+            <>
+              <p>Wrong network please select {network}</p>
+              <Web3NetworkSwitch />
+            </>
+          ) : (
+            <AlertDialogAction onClick={handleConfirm}>
+              Continue
+            </AlertDialogAction>
+          )}
 
-          <AlertDialogAction onClick={handleConfirm}>
-            Continue
-          </AlertDialogAction>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>

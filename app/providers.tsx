@@ -1,6 +1,6 @@
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Chain, configureChains, createConfig, WagmiConfig } from 'wagmi'
-import { Web3Modal, useWeb3ModalTheme } from '@web3modal/react'
+import { Web3Modal } from '@web3modal/react'
 import { optimism, zora } from 'wagmi/chains'
 
 const base = {
@@ -55,17 +55,6 @@ export const Providers = ({ children }: ProvidersProps) => {
     publicClient,
   })
   const ethereumClient = new EthereumClient(wagmiConfig, chains)
-
-  const { setTheme } = useWeb3ModalTheme()
-
-  setTheme({
-    themeMode: 'dark',
-    // themeVariables: {
-    //   '--w3m-font-family': 'monospace',
-    //   '--w3m-accent-color': '#66ff66',
-    //   '--w3m-background-color': '#15803d',
-    // },
-  })
 
   return (
     <>

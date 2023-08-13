@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/Button'
-import { Web3Button, useWeb3Modal } from '@web3modal/react'
+import { useWeb3Modal } from '@web3modal/react'
 import { useAccount } from 'wagmi'
 
 export const Landing = () => {
@@ -20,11 +20,11 @@ export const Landing = () => {
         Autoinvest decentralized way
       </p>
       <Button label={'Create plan'} onClick={() => open()} />
-      <Button
+      {/* <Button
         label={'To the dashboard'}
         onClick={() => router.push('/dashboard')}
         className='bg-[#3E406F]'
-      />
+      /> */}
     </div>
   )
 }

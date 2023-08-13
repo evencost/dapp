@@ -1,5 +1,4 @@
-import { ChangeEvent, ChangeEventHandler, FormEvent, useState } from 'react'
-import { useNetwork } from 'wagmi'
+import { ChangeEvent, useState } from 'react'
 import { chains } from '@/app/providers'
 import {
   AlertDialog,
@@ -15,22 +14,18 @@ import { Button } from './ui/button'
 import { useToast } from './ui/use-toast'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
+import { Toaster } from './ui/toaster'
 
 export const Create = () => {
-  const { chain } = useNetwork()
-
   const [network, setNetwork] = useState<NetworkType | null>(null)
   const [crypto, setCrypto] = useState<CryptoType | null>(null)
   const [amount, setAmount] = useState<number>()
   const [cycle, setCycle] = useState<CycleType | null>(null)
 
-  const handleSubmit = () => {
-    console.debug('handle form submit')
-    console.debug({ network, crypto, amount, cycle })
-  }
-
   return (
     <div id='create' className='mx-2 my-2 flex w-full flex-col gap-4'>
+      <Toaster />
+
       <div id='form' className=' flex flex-col gap-4 rounded-3xl bg-white px-4'>
         <p id='title' className='mt-6 whitespace-pre text-2xl'>
           {'  Create your plan'}
@@ -126,7 +121,7 @@ export const Create = () => {
 const supportedNetworks = chains
   .map((chain) => chain.name)
   .filter((network) => network !== 'Zora')
-type NetworkType = (typeof supportedNetworks)[number]
+export type NetworkType = (typeof supportedNetworks)[number]
 
 type NetworkSelectorProps = {
   selected: NetworkType | null
@@ -153,7 +148,7 @@ type NetworkProps = {
   selected?: boolean
   onChange: (selected: NetworkType | null) => void
 }
-const Network = ({ type, selected, onChange }: NetworkProps) => {
+export const Network = ({ type, selected, onChange }: NetworkProps) => {
   return (
     <div className='flex flex-col items-center justify-center'>
       <div
@@ -179,7 +174,7 @@ const Network = ({ type, selected, onChange }: NetworkProps) => {
 }
 
 const supportedCryptos = ['Ethereum', 'Bitcoin'] as const
-type CryptoType = (typeof supportedCryptos)[number]
+export type CryptoType = (typeof supportedCryptos)[number]
 
 type CryptoSelectorProps = {
   selected: CryptoType | null
@@ -287,7 +282,7 @@ const supportedCycles = Object.keys(
   supportedCyclesMap
 ) as (keyof typeof supportedCyclesMap)[]
 
-type CycleType = (typeof supportedCycles)[number]
+export type CycleType = (typeof supportedCycles)[number]
 
 type CycleSelectorProps = {
   selected: CycleType | null
@@ -339,6 +334,7 @@ type ConfirmProps = {
   cycle: CycleType | null
 }
 const Confirm = ({ network, crypto, amount, cycle }: ConfirmProps) => {
+  const router = useRouter()
   const [total, setTotal] = useState<number>(0)
   console.debug({ total })
   const { toast } = useToast()
@@ -360,8 +356,6 @@ const Confirm = ({ network, crypto, amount, cycle }: ConfirmProps) => {
       </Button>
     )
   }
-
-  const router = useRouter()
 
   const handleConfirm = () => {
     // step 0: create plan

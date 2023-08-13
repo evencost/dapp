@@ -22,7 +22,6 @@ const Layout = ({ children }: LayoutProps) => {
             {children}
           </div>
         </Providers>
-        <Toaster />
       </body>
     </html>
   )

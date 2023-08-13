@@ -4,6 +4,7 @@ import './globals.css'
 
 import { Providers } from '@/app/providers'
 import localFont from 'next/font/local'
+import { Toaster } from '@/components/ui/toaster'
 
 const tasaOrbiter = localFont({
   src: '../fonts/TASAOrbiterVF.woff2',
@@ -17,11 +18,11 @@ const Layout = ({ children }: LayoutProps) => {
     <html lang='en'>
       <body className={`${tasaOrbiter.variable}`}>
         <Providers>
-          {/* <div className='flex min-h-screen justify-center bg-[#F3F3F3]'> */}
-          <div className='flex min-h-screen justify-center bg-[#4da14c]'>
+          <div className='flex min-h-screen justify-center bg-[#F3F3F3]'>
             {children}
           </div>
         </Providers>
+        <Toaster />
       </body>
     </html>
   )

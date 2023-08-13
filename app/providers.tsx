@@ -1,7 +1,48 @@
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
-import { configureChains, createConfig, WagmiConfig } from 'wagmi'
+import { Chain, configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { Web3Modal, useWeb3ModalTheme } from '@web3modal/react'
 import { baseGoerli, optimism, zora } from 'wagmi/chains'
+
+const base = {
+  id: 8453,
+  name: 'Base',
+  network: 'base',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Ethereum',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    public: { http: ['https://mainnet.base.org'] },
+    default: { http: ['https://mainnet.base.org'] },
+  },
+  blockExplorers: {
+    default: { name: 'Base Scan', url: 'https://basescan.org' },
+  },
+} as const satisfies Chain
+
+const mode = {
+  id: 919,
+  name: 'Mode',
+  network: 'mode',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Ethereum',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    public: { http: ['https://sepolia.mode.network'] },
+    default: { http: ['https://sepolia.mode.network'] },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Mode Scan',
+      url: 'https://sepolia.explorer.mode.network/',
+    },
+  },
+} as const satisfies Chain
+
+export const chains = [optimism, base, zora, mode]
 
 type ProvidersProps = { children: React.ReactNode }
 

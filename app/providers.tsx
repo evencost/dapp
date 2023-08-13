@@ -1,7 +1,7 @@
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Chain, configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { Web3Modal, useWeb3ModalTheme } from '@web3modal/react'
-import { baseGoerli, optimism, zora } from 'wagmi/chains'
+import { optimism, zora } from 'wagmi/chains'
 
 const base = {
   id: 8453,
@@ -42,16 +42,13 @@ const mode = {
   },
 } as const satisfies Chain
 
-export const chains = [optimism, base, zora, mode]
-
 type ProvidersProps = { children: React.ReactNode }
-
+export const supportedChains = [optimism, base, zora, mode]
 export const Providers = ({ children }: ProvidersProps) => {
   const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID ?? ''
-  const { chains, publicClient } = configureChains(
-    [optimism, baseGoerli, zora],
-    [w3mProvider({ projectId })]
-  )
+  const { chains, publicClient } = configureChains(supportedChains, [
+    w3mProvider({ projectId }),
+  ])
   const wagmiConfig = createConfig({
     autoConnect: true,
     connectors: w3mConnectors({ projectId, chains }),

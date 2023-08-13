@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/Button'
-import { useWeb3Modal } from '@web3modal/react'
+import { Web3Button, useWeb3Modal } from '@web3modal/react'
 import { useAccount } from 'wagmi'
 
 export const Landing = () => {

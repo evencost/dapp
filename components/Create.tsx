@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react'
-import { chains } from '@/app/providers'
+import { supportedChains } from '@/app/providers'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,6 +15,7 @@ import { useToast } from './ui/use-toast'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { Toaster } from './ui/toaster'
+import { Web3Button, Web3NetworkSwitch } from '@web3modal/react'
 
 export const Create = () => {
   const [network, setNetwork] = useState<NetworkType | null>(null)
@@ -23,10 +24,15 @@ export const Create = () => {
   const [cycle, setCycle] = useState<CycleType | null>(null)
 
   return (
-    <div id='create' className='mx-2 my-2 flex w-full flex-col gap-4'>
+    <div id='create' className='mx-2 my-2 flex w-full justify-center gap-4'>
+      <Web3Button />
+
       <Toaster />
 
-      <div id='form' className=' flex flex-col gap-4 rounded-3xl bg-white px-4'>
+      <div
+        id='form'
+        className='flex max-w-[772px] flex-col gap-4 rounded-3xl bg-white px-4'
+      >
         <p id='title' className='mt-6 whitespace-pre text-2xl'>
           {'  Create your plan'}
         </p>
@@ -54,7 +60,7 @@ export const Create = () => {
       </div>
       <div
         id='summary'
-        className='flex w-full flex-col gap-4 rounded-3xl bg-white px-4'
+        className='flex w-full max-w-[360px] flex-col gap-4 rounded-3xl bg-white px-4'
       >
         <p id='title' className='mt-6 whitespace-pre text-2xl'>
           {'Plan Summary'}
@@ -98,14 +104,6 @@ export const Create = () => {
           </div>
         </div>
 
-        <div className='flex h-[19px]  items-start justify-start gap-4'>
-          <div className='shrink grow basis-0 text-base font-medium tracking-tight text-zinc-400'>
-            Chain
-          </div>
-          <div className='text-base font-medium tracking-tight text-gray-800'>
-            Optimism
-          </div>
-        </div>
         <div className='-mx-4 h-[2px] bg-[#F3F3F3]'></div>
         <Confirm
           network={network}
@@ -118,7 +116,7 @@ export const Create = () => {
   )
 }
 
-const supportedNetworks = chains
+const supportedNetworks = supportedChains
   .map((chain) => chain.name)
   .filter((network) => network !== 'Zora')
 export type NetworkType = (typeof supportedNetworks)[number]
@@ -369,13 +367,15 @@ const Confirm = ({ network, crypto, amount, cycle }: ConfirmProps) => {
       <AlertDialogTrigger>
         <Button className='w-full'>{'Confirm'} </Button>
       </AlertDialogTrigger>
-
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Choose total amount to invest</AlertDialogTitle>
           <AmountSelector onChange={setTotal} />
         </AlertDialogHeader>
         <AlertDialogFooter>
+          {/* <p>Wrong network please selectt Optimism</p>
+          <Web3NetworkSwitch /> */}
+
           <AlertDialogAction onClick={handleConfirm}>
             Continue
           </AlertDialogAction>

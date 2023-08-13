@@ -18,7 +18,7 @@ const Layout = ({ children }: LayoutProps) => {
     <html lang='en'>
       <body className={`${tasaOrbiter.variable}`}>
         <Providers>
-          <div className='flex min-h-screen justify-center bg-[#F3F3F3]'>
+          <div className='flex min-h-screen items-center justify-center bg-[#F3F3F3]'>
             {children}
           </div>
         </Providers>

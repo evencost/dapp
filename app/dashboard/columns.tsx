@@ -4,7 +4,6 @@ import { CryptoType, CycleType, NetworkType } from '@/components/Create'
 import { ColumnDef } from '@tanstack/react-table'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-
 export type Plan = {
   id: string
   user: string

@@ -19,7 +19,7 @@ export const Landing = () => {
       <p className='items- text-center text-5xl text-[#131635]'>
         Autoinvest decentralized way
       </p>
-      <Button label={'Create plan'} onClick={open} />
+      <Button label={'Create plan'} onClick={() => open()} />
       <Button
         label={'To the dashboard'}
         onClick={() => router.push('/dashboard')}

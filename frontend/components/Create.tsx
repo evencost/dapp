@@ -23,19 +23,19 @@ import { useAccount, useNetwork } from 'wagmi'
 
 export const Create = () => {
   const router = useRouter()
-  const { address, isDisconnected } = useAccount()
+  const { address, isConnected, isConnecting, isReconnecting } = useAccount()
+
+  useEffect(() => {
+    console.debug({ address, isConnected, isConnecting, isReconnecting })
+    if ((!address && !isConnected && !isConnecting) || isReconnecting) {
+      router.push('/create')
+    }
+  }, [address, isConnected, isConnecting, isReconnecting])
 
   const [network, setNetwork] = useState<NetworkType | null>(null)
   const [crypto, setCrypto] = useState<CryptoType | null>(null)
   const [amount, setAmount] = useState<number>()
   const [cycle, setCycle] = useState<CycleType | null>(null)
-  useEffect(() => {
-    console.debug({ address, isDisconnected })
-    if (!address) {
-      console.debug('in if before rouner push')
-      router.push('/')
-    }
-  }, [address, isDisconnected])
 
   return (
     <div
@@ -75,15 +75,15 @@ export const Create = () => {
       </div>
       <div
         id='summary'
-        className='flex w-full max-w-[360px] flex-col gap-4 rounded-3xl bg-white px-4'
+        className='flex h-fit w-full max-w-[360px] flex-col gap-4 rounded-3xl bg-white px-4 py-6 '
       >
-        <p id='title' className='mt-6 whitespace-pre text-2xl'>
+        <p id='title' className='whitespace-pre text-2xl'>
           {'Plan Summary'}
         </p>
 
         <div className='-mx-4 h-[2px] bg-[#F3F3F3]'></div>
 
-        <div className='flex h-[19px]  items-start justify-start gap-4'>
+        <div className='flex h-[19px] items-start justify-start gap-4'>
           <div className='shrink grow basis-0 text-base font-medium tracking-tight text-zinc-400'>
             Chain
           </div>
@@ -279,7 +279,7 @@ const AmountSelector = ({ onChange }: AmountSelectorProps) => {
   )
 }
 
-const supportedCyclesMap = {
+export const supportedCyclesMap = {
   '1h': '1 hour',
   '2h': '2 hours',
   '4h': '4 hours',

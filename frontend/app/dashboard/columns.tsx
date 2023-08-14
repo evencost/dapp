@@ -1,6 +1,11 @@
 'use client'
 
-import { CryptoType, CycleType, NetworkType } from '@/components/Create'
+import {
+  CryptoType,
+  CycleType,
+  NetworkType,
+  supportedCyclesMap,
+} from '@/components/Create'
 import { ColumnDef } from '@tanstack/react-table'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
@@ -81,14 +86,27 @@ export const columns: ColumnDef<Plan>[] = [
   {
     accessorKey: 'cycle',
     header: 'Frequency',
+    cell: ({ row }) => {
+      const cycle = row.getValue('cycle') as CycleType
+      const label = supportedCyclesMap[cycle]
+      return <p>{label}</p>
+    },
   },
   {
     accessorKey: 'amount',
     header: 'Amount per period',
+    cell: ({ row }) => {
+      const amount = row.getValue('amount') as number
+      return <p>{amount} xDAI</p>
+    },
   },
   {
     accessorKey: 'total',
     header: 'Total invested',
+    cell: ({ row }) => {
+      const amount = row.getValue('total') as number
+      return <p>{amount} xDAI</p>
+    },
   },
   {
     accessorKey: 'avPrice',

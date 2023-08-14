@@ -4,15 +4,21 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/Button'
 import { useWeb3Modal } from '@web3modal/react'
 import { useAccount } from 'wagmi'
+import { useEffect } from 'react'
 
 export const Landing = () => {
   const router = useRouter()
 
   const { open } = useWeb3Modal()
 
-  const { isConnected } = useAccount()
+  const { address, isConnected, isConnecting, isReconnecting } = useAccount()
 
-  if (isConnected) router.push('/create')
+  useEffect(() => {
+    console.debug({ address, isConnected, isConnecting, isReconnecting })
+    if (address && isConnected && !isConnecting && !isReconnecting) {
+      router.push('/create')
+    }
+  }, [address, isConnected, isConnecting, isReconnecting])
 
   return (
     <div className='flex flex-col items-center justify-center gap-6'>
@@ -20,11 +26,6 @@ export const Landing = () => {
         Autoinvest decentralized way
       </p>
       <Button label={'Create plan'} onClick={() => open()} />
-      {/* <Button
-        label={'To the dashboard'}
-        onClick={() => router.push('/dashboard')}
-        className='bg-[#3E406F]'
-      /> */}
     </div>
   )
 }

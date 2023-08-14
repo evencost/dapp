@@ -58,8 +58,8 @@ export const Providers = ({ children }: ProvidersProps) => {
 
   return (
     <>
-      <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
       <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+      <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
     </>
   )
 }

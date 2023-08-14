@@ -1,3 +1,5 @@
+'use client'
+
 import { ChangeEvent, useEffect, useState } from 'react'
 import { supportedChains } from '@/app/providers'
 import {
@@ -15,14 +17,25 @@ import { useToast } from './ui/use-toast'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { Toaster } from './ui/toaster'
+
 import { Web3NetworkSwitch } from '@web3modal/react'
-import { useNetwork } from 'wagmi'
+import { useAccount, useNetwork } from 'wagmi'
 
 export const Create = () => {
+  const router = useRouter()
+  const { address, isDisconnected } = useAccount()
+
   const [network, setNetwork] = useState<NetworkType | null>(null)
   const [crypto, setCrypto] = useState<CryptoType | null>(null)
   const [amount, setAmount] = useState<number>()
   const [cycle, setCycle] = useState<CycleType | null>(null)
+  useEffect(() => {
+    console.debug({ address, isDisconnected })
+    if (!address) {
+      console.debug('in if before rouner push')
+      router.push('/')
+    }
+  }, [address, isDisconnected])
 
   return (
     <div
